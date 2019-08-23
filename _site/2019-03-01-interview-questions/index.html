@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>Data Science Q&A</title>
+
+  <meta name="author" content="Sinan Gok" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Sinan Gok, PhD - My data science portfolio" href="http://localhost:4000/feed.xml" />
+
+  
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Data Science Q&A" />
+  
+
+   
+  <meta property="og:description" content="What are the “components of learning” in Machine Learning? What is bias-variance tradeoff? How is KNN different than k-means clustering? What are ROC and AUC? What is a cost function? What is gradient descent? Why feature scaling is important before applying a learning algorithm? What is Linear Regression? What is...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://localhost:4000/2019-03-01-interview-questions/" />
+  <link rel="canonical" href="http://localhost:4000/2019-03-01-interview-questions/" />
+  
+
+  
+  <meta property="og:image" content="http://localhost:4000/img/sakal-profile.jpeg" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Data Science Q&A" />
+  
+
+  
+  <meta name="twitter:description" content="What are the “components of learning” in Machine Learning? What is bias-variance tradeoff? How is KNN different than k-means clustering? What are ROC and AUC? What is a cost function? What is gradient descent? Why feature scaling is important before applying a learning algorithm? What is Linear Regression? What is...">
+  
+
+  
+  <meta name="twitter:image" content="http://localhost:4000/img/sakal-profile.jpeg" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://localhost:4000/">Sinan Gok, PhD</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/aboutme">About Me</a></li>
+          <li class="navlinks-container">
+            <a class="navlinks-parent" href="javascript:void(0)">Articles</a>
+            <div class="navlinks-children">
+              <a href="https://medium.com/@goksinan/object-oriented-programming-oop-in-python-a-short-introduction-cd32b4c84393">OOP in Python</a>
+              <a href="https://medium.com/@goksinan/demystifying-the-name-check-in-python-dce439472a83">The __name__ check</a>
+            </div>
+          </li>
+        
+          <li><a href="/resources">Resources</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://localhost:4000/">
+	      <img class="avatar-img" src="/img/sakal-profile.jpeg" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Data Science Q&A</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on March 1, 2019</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <ol>
+  <li><a href="#q1">What are the “components of learning” in Machine Learning?</a></li>
+  <li><a href="#q2">What is bias-variance tradeoff?</a></li>
+  <li><a href="#q3">How is KNN different than k-means clustering?</a></li>
+  <li><a href="#q4">What are ROC and AUC?</a></li>
+  <li><a href="#q5">What is a cost function?</a></li>
+  <li><a href="#q6">What is gradient descent?</a></li>
+  <li><a href="#q7">Why feature scaling is important before applying a learning algorithm?</a></li>
+  <li><a href="#q8">What is Linear Regression?</a></li>
+  <li><a href="#q9">What is Polynomial Regression?</a></li>
+  <li><a href="#q10">What is Logistic Regression?</a></li>
+  <li><a href="#q11">Can Logistic Regression be used for multiclass classification?</a></li>
+  <li><a href="#q12">What is overfitting? How can you avoid it?</a></li>
+  <li><a href="#q13">What is Regularization?</a></li>
+  <li><a href="#q14">Why is Bayes’ Rule is useful in spam filtering?</a></li>
+  <li><a href="#q15">Does getting more training data always improve the performance of the model?</a></li>
+  <li><a href="#q16">How do you approach a machine learning problem?</a></li>
+  <li><a href="#q17">What type of error metrics do you use to evaluate imbalanced classifications?</a></li>
+  <li><a href="#q18">What is SVM and how does it work?</a></li>
+  <li><a href="#q19">How does k-means clustering algorithm work?</a></li>
+  <li><a href="#q20">What is the “ceiling analysis” and why is it important?</a></li>
+  <li><a href="#q21">What are the different types of testing?</a></li>
+</ol>
+
+<hr />
+
+<h2 id="-q1-what-are-the-components-of-learning-in-machine-learning"><a name="q1"></a> Q1. What are the “components of learning” in Machine Learning?</h2>
+
+<p>Consider the following diagram: (source: <a href="https://www.youtube.com/watch?v=mbyG85GZ0PI&amp;list=PLD63A284B7615313A&amp;index=1">caltech</a>)</p>
+
+<p><img src="/images/data-science-questions/learning-problem.png" alt="learning problem" width="500" />
+<br /></p>
+
+<ul>
+  <li>
+    <p><script type="math/tex">f</script>: The target function is the true function that connects the input to the output. Learning Algorithm’s goal is estimate this function to the best of its ability.</p>
+  </li>
+  <li>
+    <p><em>Training examples</em> is the historical data that is available to us. We will use this to come up with a function.</p>
+  </li>
+  <li>
+    <p><em>Hypothesis set</em> is the set of functions we choose to use. We are going to find a hypothesis <script type="math/tex">g</script> which approximates to the real hypothesis <script type="math/tex">f</script>.</p>
+  </li>
+  <li>
+    <p><em>Learning algorithm</em> is the process of figuring out the hypothesis <script type="math/tex">g</script>. This is when the parameters of the candidate function is decided and fine tuned.</p>
+  </li>
+  <li>
+    <p><strong>Hypothesis set:</strong> Linear Regression -&gt; <strong>Learning algorithm:</strong> Ordinary least squares
+<br />
+<strong>Hypothesis set:</strong> Neural Networks -&gt; <strong>Learning algorithm:</strong> Back propagation</p>
+  </li>
+</ul>
+
+<h3 id="-q2-what-is-bias-variance-tradeoff"><a name="q2"></a> Q2. What is bias-variance tradeoff?</h3>
+
+<p>What do we mean by the variance and bias of a statistical learning method? Variance refers to the amount by which <script type="math/tex">\hat{f}</script> (function that defines the model) would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different <script type="math/tex">\hat{f}</script>. But ideally the estimate for <script type="math/tex">{f}</script> should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in <script type="math/tex">\hat{f}</script>. In general, more flexible statistical methods have higher variance.</p>
+
+<p>On the other hand, bias refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. For example, linear regression assumes that there is a linear relationship between Y and X1, X2,…,Xp. It is unlikely that any real-life problem truly has such a simple linear relationship, and so performing linear regression will undoubtedly result in some bias in the estimate of <script type="math/tex">{f}</script>.</p>
+
+<h2 id="-q3-how-is-knn-different-than-k-means-clustering"><a name="q3"></a> Q3. How is KNN different than k-means clustering?</h2>
+
+<p>KNN is a supervised classification algorithm which requires labeled output to work. <em>K</em> refers the number of neighbors of a point. We look at these point to decide which class the point belongs to. If <em>K</em> is small, it means that our different classes have sharp boundaries and resulting model is probably overfitted. If <em>K</em> is big, the boundaries are smoother and the model is probably more generalizable.</p>
+
+<p>K-means, on the other hand, refers to an unsupervised learning algorithm. It doesn’t require labelled outputs. What we need is the number of clusters that we want the points fall into, and a distance measure. The algorithm gradually finds cluster centers and a number of points around them. And concludes that these points belong to the same cluster.</p>
+
+<h2 id="-q4-what-are-roc-and-auc"><a name="q4"></a> Q4. What are ROC and AUC?</h2>
+
+<p>In a classification problem, the confusion matrix represents the performance of the classification algorithm. Ideally, we would like to have less misclassifications. However, depending on the decision threshold we use, the correct classifications may differ from one class to other. The ROC (receiver operating characteristic) curve is a visual representation of all the confusion matrices we have for various thresholds (for binary classifications). It helps us to decide the best threshold for our problem. The AUC (area under the curve) summarizes the ROC curve with a single value. Usually, the higher the AUC the better.</p>
+
+<h2 id="-q5-what-is-a-cost-function"><a name="q5"></a> Q5. What is a cost function?</h2>
+
+<p>Examine the following picture (credit to Andrew Ng at Coursera):</p>
+
+<p><img src="/images/data-science-questions/learning.png" alt="learning" width="400" />
+<br /></p>
+
+<p>For a given training set, the learning algorithm estimates a function <script type="math/tex">h</script> (hypothesis), which maps the input to the output to the best its ability. This mapping may not be perfect, but it is the closest approximation to the actual function.</p>
+
+<script type="math/tex; mode=display">h_{Q}(x) = Q_{0} + Q_{1}x</script>
+
+<p>Learning algorithm tries to find the best <script type="math/tex">{Q}</script> parameters. In other words, it needs to choose parameters so that <script type="math/tex">h_{Q}(x)</script> will be close the <script type="math/tex">{y}</script> for our training examples. This is essentially an optimization problem and can be formulated as:</p>
+
+<script type="math/tex; mode=display">{J(Q_0, Q_1)} = \frac{1}{2m} \sum_{i=1}^m (h_{Q}(x^{(i)}) - y^{(i)})^2</script>
+
+<script type="math/tex; mode=display">minimize({J(Q_0, Q_1)})</script>
+
+<p>The above <script type="math/tex">J</script> is called an <em>objective function</em> or <em>cost function</em>, and can be read as the following: We have to choose <script type="math/tex">Q_0</script> and <script type="math/tex">Q_1</script> parameters that minimizes the solution to above equation. <script type="math/tex">x^{(i)}</script> denotes the <script type="math/tex">ith</script> training input.</p>
+
+<p>This is sometimes called “Squared difference cost function” and it is the most commonly used cost function in regression problems.</p>
+
+<h2 id="-q6-what-is-gradient-descent"><a name="q6"></a> Q6. What is gradient descent?</h2>
+
+<p>Gradient Descent is an algorithm that is used to minimize a function. For example, <script type="math/tex">J(Q_0, Q_1)</script> can be minimized over <script type="math/tex">Q_0</script> and <script type="math/tex">Q_1</script>. Having 2 parameters, we will end up with a 3D surface function where x-axis is <script type="math/tex">Q_0</script>, y-axis is <script type="math/tex">Q_1</script>, and the z-axis is the output of the function.</p>
+
+<p><img src="/images/data-science-questions/gradient-descent.png" alt="GD" />
+<br /></p>
+
+<p>Imagine it as a landscape with hills and valleys. What Gradient Descent does is, it starts from an arbitrary point in the landscape, and finds the direction of the steepest descent at that point. After finding it, it descends with a certain distance. Then, looks for the steepest descent at the new point and jumps at that direction. It repeats this process until it reaches to a local minima. The result may not be the optimal solution, since Gradient Descent doesn’t guarantee to find the global minimum.</p>
+
+<p><script type="math/tex">Q_j := Q_j - \alpha\frac{\partial}{\partial Q_j}J(Q_0, Q_1)</script> (for <script type="math/tex">j=0</script> and <script type="math/tex">j=1</script>)</p>
+
+<p><script type="math/tex">\alpha</script>: learning rate (how fast the algorithm updates)</p>
+
+<p>Gradient Descent is an iterative process and it is not deterministic. After each iteration, the cost function has to decrease. After a certain number of iterations, the decrease slows down and this is when you decide if the algorithm is converged or not. Usually, if you choose a very large <script type="math/tex">\alpha</script>, the algorithm can overshoot and never converge. If the <script type="math/tex">\alpha</script>, then you have a very slow convergence. A good practice is trying different values of <script type="math/tex">\alpha</script> and plotting the cost function to see if it is converged.</p>
+
+<p>Rather than using Gradient Descent, the parameters can be computed numerically using the <strong>normal equation</strong> method:</p>
+
+<script type="math/tex; mode=display">Q = (X^{T}X)^{-1}X^{T}y</script>
+
+<p>Since <strong>normal equation</strong> method involves inverting matrices, if the number of features too large Gradient Descent would be the better choice.</p>
+
+<h2 id="-q7-why-feature-scaling-is-important-before-applying-a-learning-algorithm"><a name="q7"></a> Q7. Why feature scaling is important before applying a learning algorithm?</h2>
+
+<p>If there is a large difference between the ranges of the features, the Gradient Descent algorithm can take a long time to converge. There would be unnecessary oscillations due to highly skewed values. So, feature scaling is needed for the Gradient Descent to efficiently work.</p>
+
+<h2 id="-q8-what-is-linear-regression"><a name="q8"></a> Q8. What is Linear Regression?</h2>
+
+<p>Linear regression is an analytical technique used to model the relationship between several input variables and a continuous output variable. The key point is that we assume that the relationship is linear. This is a safe assumption because in the worst case, a linear relationship can be achieved by transforming the variables. Linear regression generates a probabilistic model, where some randomness always exists. Consider the following equation:</p>
+
+<script type="math/tex; mode=display">income = \beta_0 + \beta_1{age} + \beta_2{education} + \epsilon</script>
+
+<p>The model represents the relationship between the <em>income</em> (output) and <em>age</em> and <em>education</em> (input) of employees that work in a company. The error term captures the variations that do not fit the linearity assumption. The fitted model should minimize the overall error between the model output and the actual observations. But what <script type="math/tex">\beta</script> parameters should we choose to achieve this? Ordinary Least Squares (OLS) is the most commonly used technique to find those parameters. For a dataset with <script type="math/tex">n</script> observations:</p>
+
+<script type="math/tex; mode=display">\sum_{i=1}^n [y_i -(\beta_0 + \beta_ix_i)]^2</script>
+
+<h2 id="-q9-what-is-polynomial-regression"><a name="q9"></a> Q9. What is Polynomial Regression?</h2>
+
+<p>If fitting a straight line to data is not applicable, maybe a more flexible line would work better. Polynomial regression provides this flexibility. It is similar to linear regression except that the cost model includes higher order versions of the features.</p>
+
+<h2 id="-q10-what-is-logistic-regression"><a name="q10"></a> Q10. What is Logistic Regression?</h2>
+
+<p>Logistic Regression is used to solve classification problems and it is widely used by ML community. It is an extension of the Linear Regression method where the objective is fitting a linear line to a set of data points. However, using Linear Regression for a classification problem has many disadvantages. Thus, Logistic Regression has been developed as a remedy. The most obvious difference is that Logistic Regression forces the output to be somewhere between 0 and 1.</p>
+
+<p>Logistic regression:   <script type="math/tex">0 \leq h_Q(x) \leq 1</script></p>
+
+<p>In order to constrain the output, we use a special function, called <em>sigmoid</em> or <em>logistic function</em>. This is where the name comes from.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\phi(z) = \frac{1}{1+e^{-z}} \qquad for {-}\infty < z < \infty %]]></script>
+
+<p><img src="/images/data-science-questions/logistic-function.png" alt="sigmoid" width="500" />
+<br /></p>
+
+<script type="math/tex; mode=display">\phi(h_Q(x)) = \frac{1}{1+e^{-h_Q(x)}}</script>
+
+<p>Logistic regression gives us the probability of <script type="math/tex">h_Q(x)</script> being either 1 or 0. Assume that we pick the threshold as 0.5. If the hypothesis is less than 0, logistic function leads to 0. If the hypothesis is larger than 0, the logistic function generates a 1.</p>
+
+<h2 id="-q11-can-logistic-regression-be-used-for-multiclass-classification"><a name="q11"></a> Q11. Can Logistic Regression be used for multiclass classification?</h2>
+
+<p>Yes. Using the idea of <em>one-vs-all</em>, we can use standard Logistic regression to perform multiclass classification. One-vs-all treats a class as the positive class while treating all the others as negative. And repeats this for each of <script type="math/tex">k</script> classes and ends up with <script type="math/tex">k</script> number of classifiers.</p>
+
+<h2 id="-q12-what-is-overfitting-how-can-you-avoid-it"><a name="q12"></a> Q12. What is overfitting? How can you avoid it?</h2>
+
+<p><strong>High bias:</strong> Our opinion about the model is biased, e.g. we think that there is a linear relationship underlying the model, thus we use a simple linear regression model. However, the real relationship is more complex, and we underfit the curve.</p>
+
+<p><strong>High variance:</strong> We pick a complex model to fit to the training set. We do a good job but if the underlying mechanism has a lot of variance, it means that our model would not be able to capture all and it would not do a good job on a different set of data. In other words, it will overfit to the training set, but it won’t generalize.</p>
+
+<p>There are two main ways to avoid overfitting:</p>
+
+<ol>
+  <li>Reduce number of features:
+    <ul>
+      <li>Either manually select the most important features and discard the noise which lead overfitting</li>
+      <li>Or use a feature selection algorithm to automatically eliminate least significant features</li>
+    </ul>
+  </li>
+  <li>Regularization
+    <ul>
+      <li>Keep all the features, but reduce the influence of some parameters</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="-q13-what-is-regularization"><a name="q13"></a> Q13. What is Regularization?</h2>
+
+<p>Most of the time, in order to decrease the variance and increase model’s generalizability we want to reduce the number of features. One method is keeping all the featues in the model while decreasing their weights by shrinking them towards zero. Sometimes they are shrunken down to exactly zero. This is called regularization. Regularization plays an important role in high-dimensional datasets. We basically penalize the loss function by adding an extra term. This extra term depends on the feature weights, the higher the weights the more we penalize the loss function. Remember the cost function for linear regression. Here is the version with added <em>regularization term:</em></p>
+
+<script type="math/tex; mode=display">{J(Q)} = \frac{1}{2m} \sum_{i=1}^m (h_{Q}(x^{(i)}) - y^{(i)})^2 + \lambda\sum_{i=1}^n Q_j^2</script>
+
+<p><script type="math/tex">\lambda</script> is called the <em>regularization parameter</em></p>
+
+<p><em>Ridge regression:</em> Regularized linear regression model. It doesn’t enforce coefficients to be zero, it only shrinks them towards zero.</p>
+
+<p><em>Lasso regression:</em> Similar to Ridge but it enforces the coefficient towards zero and effectively gets rid of them. It is basically a feature selection method.</p>
+
+<p><em>Elastic net regression:</em> In order to get the best of both worlds, this method linearly combines L1 and L2 penalties of the lasso and ridge methods.</p>
+
+<h2 id="-q14-why-is-bayes-rule-is-useful-in-spam-filtering"><a name="q14"></a> Q14. Why is Bayes’ Rule is useful in spam filtering?</h2>
+
+<p>It is estimated that 60% of the emails in the world are spam. Email clients run a program in the background to classify a new email as spam or safe. One popular method is to use the words that appear in the email content to detect if it is spam or not. I mathematical terms, we are interested in the <em>probability of en email being spam given the words inside:</em></p>
+
+<script type="math/tex; mode=display">P(spam|words)</script>
+
+<p>Bayes’ rule can be used to compute this probability:</p>
+
+<script type="math/tex; mode=display">P(spam|words) = \frac{P(spam)P(words|spam)}{P(words)}</script>
+
+<p><script type="math/tex">P(spam)</script>: The probability of an email being spam, regardless of the words it contains. According to our experience, this number is 60%.
+<script type="math/tex">P(words|spam)</script>: How often these words are seen when the email is classified as spam?
+<script type="math/tex">P(words)</script>: How often this word combination is used regardless of spam.</p>
+
+<p>The classification algorithm used here is called Naive Bayes Classification. The “naive” part comes from the classifier’s assumption that features are independent; knowing one feature doesn’t tell us anything about the other features. This is a naive assumption because in reality, most of the time the features are dependent.</p>
+
+<h2 id="-q15-does-getting-more-training-data-always-improve-the-performance-of-the-model"><a name="q15"></a> Q15. Does getting more training data always improve the performance of the model?</h2>
+
+<p>If you have few data points, the model will be trained easily since there is less points to be fitted. As the training data increase, fitting those data points will get progressively harder. On the other hand, the more training data you have the better chance there is for your model to generalize. There are two extremes that you have to consider:</p>
+
+<p>1) <strong>High bias (simple model, underfitting)</strong></p>
+
+<p><img src="/images/data-science-questions/learning-high-bias.png" alt="high-bias" />
+<br /></p>
+
+<p>If a learning algorithm is suffering from high bias, getting more training data will not (by itself) help much.</p>
+
+<p>2) <strong>High variance (complex model, overfitting)</strong></p>
+
+<p><img src="/images/data-science-questions/learning-high-variance.png" alt="high-variance" />
+<br /></p>
+
+<p>If a learning algorithm is suffering from high variance, getting more training data is likely to help.</p>
+
+<hr />
+
+<h2 id="-q16-how-do-you-approach-a-machine-learning-problem"><a name="q16"></a> Q16. How do you approach a machine learning problem?</h2>
+
+<p>Rather than relying on your gut feeling and randomly trying different methods to optimize your learning algorithm, you can take the following steps to make informed decisions:</p>
+
+<ol>
+  <li>
+    <p>Start with a simple model. Use training, validation, and test sets to evaluate your model. Slowly build up your model to a more complex version.</p>
+  </li>
+  <li>
+    <p>Plot learning curves and try to see if you have a high bias problem (your model is too simple) or high variance problem (your model can’t generalize to unseen data). Then, take an appropriate action to improve your model.</p>
+  </li>
+  <li>
+    <p>Perform <strong><em>error analysis.</em></strong> Manually examine the samples your model got wrong. See if there is any pattern to it. Think what type of features is causing the confusion and which ones are helping. Try to add new features that might have caught those errors.</p>
+  </li>
+</ol>
+
+<h2 id="-q17-what-type-of-error-metrics-do-you-use-to-evaluate-imbalanced-classifications"><a name="q17"></a> Q17. What type of error metrics do you use to evaluate imbalanced classifications?</h2>
+
+<p>We can use <em>precision</em> and <em>recall</em>. We want them to be close to 1 for high performance classifiers.</p>
+
+<p><img src="/images/data-science-questions/precision-recall.png" alt="precision-recall" />
+<br /></p>
+
+<script type="math/tex; mode=display">Precision = \frac{True\ positives}{Number\ of\ predicted\ positives} = \frac{TP}{TP+FP}</script>
+
+<script type="math/tex; mode=display">Recall = \frac{True\ positives}{Number\ of\ actual\ positives} = \frac{TP}{TP+FN}</script>
+
+<p><br /></p>
+
+<p><strong>For example:</strong></p>
+
+<p><img src="/images/data-science-questions/precision-recall-example.png" alt="precision-recall" />
+<br /></p>
+
+<script type="math/tex; mode=display">Accuracy = \frac{TP+TN}{All} = \frac{80+820}{1000} = 0.9</script>
+
+<script type="math/tex; mode=display">Precision = \frac{TP}{TP+FP} = \frac{80}{80+20} = 0.8</script>
+
+<script type="math/tex; mode=display">Recall = \frac{TP}{TP+FN} = \frac{80}{80+80} = 0.5</script>
+
+<p><strong>Interpretation:</strong> If we were to use the good-old misclassification metric, <strong><em>accuracy</em></strong>, the above classifier actually performed very good, i.e. 90%. However, in reality, half of the positive class is misclassified. So, this classifier does a terrible job and <strong><em>recall</em></strong> captures that. But, when it assigns a positive class its decision is correct 80% of the time, and <strong><em>precision</em></strong> captures that information. Using these two metrics, we can report the classification performance with a single numerical number, that is called <strong><em>F1 score</em></strong>:</p>
+
+<script type="math/tex; mode=display">F1 = 2*\frac{precision*recall}{precision+recall}</script>
+
+<script type="math/tex; mode=display">F1 = 2*\frac{0.8*0.5}{0.8+0.5} = 0.6</script>
+
+<p>This number should be close to 1 for us to conclude that this is a good classifier. As you can see, 0.6 is not good enough.</p>
+
+<h2 id="-q18-what-is-svm-and-how-does-it-work"><a name="q18"></a> Q18. What is SVM and how does it work?</h2>
+
+<p>SVM stands for Support Vector Machines, and “it is arguably the most successful classification method in machine learning” (Prof. Abu-Mostafa).</p>
+
+<p>Consider the following dataset:</p>
+
+<p><img src="/images/data-science-questions/svm.png" alt="svm" width="400" />
+<br /></p>
+
+<ul>
+  <li>
+    <p>Which line best separates the two classes? H1 doesn’t separate the classes. H2 does, but only with a small margin. H3 is the best line, separates with the highest margin. But, how do we find H3, how do we decide the best line?</p>
+  </li>
+  <li>
+    <p>The distance from the separating line corresponds to the confidence of our classification. The farther a point from the line, the more confident we are that it belong to its class. An SVM performs classification by finding the hyperplane that maximizes the margin between two classes. The vectors that define the hyperplane are the support vectors.</p>
+  </li>
+  <li>
+    <p>SVM performs a constrained optimization problem. The optimization is to maximize the distance between the nearest points in classes and the hyperplane (margin), and the constraints are the nearest data points should not fall inside the margin.</p>
+  </li>
+  <li>When using an SVM model, there are few parameters to consider:
+    <ul>
+      <li><strong><script type="math/tex">C</script> constant:</strong> This parameter adjusts the complexity of the model. If you pick a large <em>C</em>, the decision boundary would become more curvy and lead overfitting.</li>
+      <li><strong>Kernel trick:</strong> If the classes are not linearly separable, i.e. if there is a need for a nonlinear decision boundary. We can use the <em>kernel trick</em> to transform the data into a linearly separable space.</li>
+      <li><strong><script type="math/tex">\sigma^2</script>:</strong> This parameter is the variance in the Gaussian kernel. The larger it is, the wider the gaussian curve (smooth kernel, simple model, leads high bias).</li>
+    </ul>
+  </li>
+  <li>Which one to use? Logistic regression or SVM? <script type="math/tex">m</script>: number of observations, <script type="math/tex">n</script>: number of features.
+    <ul>
+      <li><script type="math/tex">n</script> is large (10,000), <script type="math/tex">m</script> is small (10-1,000): Use Logistic Regression or SVM with linear kernel. (you don’t have enough data to figure out the complexity in the data)</li>
+      <li><script type="math/tex">n</script> is small (1 - 1,000), <script type="math/tex">m</script> is intermediate (1,000 - 10,000): Use SVM with Gaussian kernel. (seems a fairly complex dataset, better use Gaussian kernel)</li>
+      <li><script type="math/tex">n</script> is small (1 - 1,000), <script type="math/tex">m</script> is large (50,000+): Try to add more features and use Logistic Regression or SVM without a kernel.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="-q19-how-does-k-means-clustering-algorithm-work"><a name="q19"></a> Q19. How does k-means clustering algorithm work?</h2>
+
+<p>(From <a href="http://www-bcf.usc.edu/~gareth/ISL/ISLR%20Seventh%20Printing.pdf">Hastie &amp; Tibshirani</a>). <em>K-means</em> clustering is a simple and elegant approach for partitioning a data set into <em>K</em> distinct, non-overlapping clusters, such that the total within-cluster variation, summed over all <em>K</em> clusters is as small as possible. The algorithm flows as follows:</p>
+
+<ol>
+  <li>
+    <p>Randomly assign a number, from <script type="math/tex">1</script> to <script type="math/tex">K</script>, to each observations. These serve as initial cluster assignments for the observations.</p>
+  </li>
+  <li>
+    <p>Iterate until the cluster assignments stops changing:
+<br />
+    a) For each of the <script type="math/tex">K</script> clusters, compute the cluster <em>centroid.</em> The <script type="math/tex">kth</script> cluster centroid is the vector of the <script type="math/tex">p</script> feature means for the observations in the <script type="math/tex">kth</script> cluster.
+<br />
+    b) Assign each observation to the cluster whose centroid is closest (where closest is defined using Euclidean distance)</p>
+  </li>
+</ol>
+
+<p><strong>Note:</strong> Because the <em>K-means</em> finds a local rather than a global optimum, the results depend on the initial random class assignments. For that, you should run the algorithm multiple times and select the best solution (in which the objective function is minimized). See the picture to visualize the steps.</p>
+
+<p><img src="/images/data-science-questions/k-means.png" alt="k-means" width="500" />
+<br /></p>
+
+<h2 id="-q20-what-is-the-ceiling-analysis-and-why-is-it-important"><a name="q20"></a> Q20. What is the “ceiling analysis” and why is it important?</h2>
+
+<p><em>Ceiling analysis</em> is the process of identifying the weakest (and most promising) link in your machine learning pipeline which is worth to improve. Your machine learning pipeline might compose of multiple components each performing a different task. If your pipeline is performing poorly in overall, which part of the pipeline you should work on so that its performance improves?</p>
+
+<p>Let’s assume that we have the following ML pipeline for a car detection application:</p>
+
+<ul>
+  <li>image -&gt; 80% <em>(overall accuracy)</em></li>
+  <li>background removal -&gt; 90% <em>(receives 100% correct labels)</em></li>
+  <li>image segmentation -&gt; 92% <em>(receives 100% correct labels)</em></li>
+  <li>vehicle recognition -&gt; 100% <em>(receives 100% correct labels)</em></li>
+</ul>
+
+<p>Let’s assume that we want to use <em>ceiling analysis</em> to identify the bottlenecks in our system. What we do is we manually label the test set for a particular component <strong>(background removal)</strong>, so that that components receives 100% correct labels. Then, we check the system’s performance. If there is a large increase, for instance from 80% to 90%, then it means that correctly labelling the test set at that component is very important and we should invest our time to improve that component.</p>
+
+<h2 id="-q21-what-are-the-different-types-of-testing"><a name="q21"></a> Q21. What are the different types of testing?</h2>
+
+<p>There are 3 test classes:</p>
+<ol>
+  <li>Unit testing
+    <ul>
+      <li>validate each piece of program</li>
+      <li>each function is tested separately</li>
+    </ul>
+  </li>
+  <li>Regression testing
+    <ul>
+      <li>running the unit test again after fixing bugs</li>
+      <li>this is to ensure that you didn’t introduce new bugs</li>
+    </ul>
+  </li>
+  <li>Integration testing
+    <ul>
+      <li>test the whole system</li>
+      <li>make sure that interacting pieces work nicely</li>
+    </ul>
+  </li>
+</ol>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#Interview">Interview</a>
+          
+            <a href="/tags#Questions">Questions</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Data+Science+Q%26A&url=http%3A%2F%2Flocalhost%3A4000%2F2019-03-01-interview-questions%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2019-03-01-interview-questions%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2019-03-01-interview-questions%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2019-01-01-Rsquared-vs-squaredr/" data-toggle="tooltip" data-placement="top" title="Comparison of Two Similarity Metrics">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2019-05-01-rat-movement-analysis/" data-toggle="tooltip" data-placement="top" title="Rat Movement Analysis">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:someone@example.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://www.facebook.com/deanattali" title="Facebook"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Facebook</span>
+              </a>
+            </li><li><a href="https://github.com/daattali" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/daattali" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Sinan Gok
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://localhost:4000/">Home</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  </body>
+</html>

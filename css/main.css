@@ -2,7 +2,8 @@
 layout: null
 ---
 
-@import url("pygment_highlights.css");
+/*@import url("pygment_highlights.css");*/
+@import url("pygments/default.css");
 
 /* --- General --- */
 
@@ -645,13 +646,13 @@ table tr th {
   border: 1px solid #cccccc;
   text-align: left;
   margin: 0;
-  padding: 6px 13px;
+  padding: 3px 7px;
 }
 table tr td {
   border: 1px solid #cccccc;
   text-align: left;
   margin: 0;
-  padding: 6px 13px;
+  padding: 3px 7px;
 }
 table tr th :first-child,
 table tr td :first-child {
@@ -668,6 +669,15 @@ pre {
   font-size: 16px;
   line-height: 1.5em;
 }
+
+.highlight pre {
+    word-wrap: normal; /* for code block with scroll */
+}
+
+.highlight pre code { /* for code block with scroll */
+    white-space: pre;
+}
+
 .highlight pre {
   border: none;
   background: none;

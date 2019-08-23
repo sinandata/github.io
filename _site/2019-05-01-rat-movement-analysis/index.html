@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>Rat Movement Analysis</title>
+
+  <meta name="author" content="Sinan Gok" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Sinan Gok, PhD - My data science portfolio" href="http://localhost:4000/feed.xml" />
+
+  
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Rat Movement Analysis" />
+  
+
+   
+  <meta property="og:description" content="Using Python (OpenCV) to analyze video files 1. Excerpt I have collected video recordings from a rat that was performing multiple trials of reach-and-pull activities. My goal in this project is to classify these activities based on the number of reaches rat performed in each trial. The overall procedure looks...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://localhost:4000/2019-05-01-rat-movement-analysis/" />
+  <link rel="canonical" href="http://localhost:4000/2019-05-01-rat-movement-analysis/" />
+  
+
+  
+  <meta property="og:image" content="http://localhost:4000/img/sakal-profile.jpeg" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Rat Movement Analysis" />
+  
+
+  
+  <meta name="twitter:description" content="Using Python (OpenCV) to analyze video files 1. Excerpt I have collected video recordings from a rat that was performing multiple trials of reach-and-pull activities. My goal in this project is to classify these activities based on the number of reaches rat performed in each trial. The overall procedure looks...">
+  
+
+  
+  <meta name="twitter:image" content="http://localhost:4000/img/sakal-profile.jpeg" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://localhost:4000/">Sinan Gok, PhD</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/aboutme">About Me</a></li>
+          <li class="navlinks-container">
+            <a class="navlinks-parent" href="javascript:void(0)">Articles</a>
+            <div class="navlinks-children">
+              <a href="https://medium.com/@goksinan/object-oriented-programming-oop-in-python-a-short-introduction-cd32b4c84393">OOP in Python</a>
+              <a href="https://medium.com/@goksinan/demystifying-the-name-check-in-python-dce439472a83">The __name__ check</a>
+            </div>
+          </li>
+        
+          <li><a href="/resources">Resources</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://localhost:4000/">
+	      <img class="avatar-img" src="/img/sakal-profile.jpeg" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Rat Movement Analysis</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on May 1, 2019</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <h2 id="using-python-opencv-to-analyze-video-files">Using Python (OpenCV) to analyze video files</h2>
+
+<h3 id="1-excerpt">1. Excerpt</h3>
+
+<p>I have collected video recordings from a rat that was performing multiple trials of reach-and-pull activities. My goal in this project is to classify these activities based on the number of reaches rat performed in each trial. The overall procedure looks like this:</p>
+
+<video poster="/images/rat_image_proc/fig7_poster.png" id="player" playsinline="" controls="">
+   <source src="/videos/rat_image_proc/output110.mp4" type="video/mp4" />
+   <source src="/videos/rat_image_proc/output110.webm" type="video/webm" />
+</video>
+
+<h3 id="2-introduction">2. Introduction</h3>
+
+<p>Rodents are among the most popular animal models used in research studies. Rats, especially, can be trained to perform a variety of tasks to study motor disabilities, and psychological and cognitive disorders. When analyzing the rat behavior or using it as a dependent parameter, it is often required to use <strong>repetitive</strong> trials in which the rat performs a “similar” task. (A <em>trial</em> is defined as the learned task, such as reaching and grasping a food pellet, that is performed by rat over and over again and during which data is collected). Perhaps, the best method of identifying a particular task is to use a 3D tracking system with reflective markers attached to the rat’s joints, although such systems can be very expensive. A cheaper and equally effective method might be using a simple USB camera that is strategically placed so that it can capture information from the images.</p>
+
+<p><img src="/images/rat_image_proc/fig1_behavior.png" alt="Reach-to-pull task" width="400" /></p>
+
+<p>Figure 1. The behavioral task
+<br /><br /></p>
+
+<hr />
+
+<h3 id="3-problem-definition">3. Problem Definition</h3>
+
+<p>The picture above demonstrates an experimental setup where neural, EMG, and force signals are being recorded simultaneously while the rat is performing a reach-to-pull task. In this task, the rat reaches through a window on its cage and pulls on a metal rod. The recording system automatically saves all the signals along with video images sampled at 30 frames/sec. Our goal is to group trials based on the number of reaches the rat performs, so that we can study each group separately.</p>
+
+<p><strong>What about using a force sensor?</strong></p>
+
+<p>Using a force sensor is probably the first and simplest solution we can think of. However, there it has a big drawback. We can detect reaches only if the animal makes contact with the rod. All other reaches would go unnoticed. We need a better approach where we can detect the reaches regardless of the final outcome (pulling vs. not pulling).</p>
+
+<p><strong>What is the alternative?</strong></p>
+
+<p>We can <strong><em>analyze the video recordings</em></strong> to figure out how many times rat attempted the pull in a given trial.</p>
+
+<hr />
+
+<h3 id="4-image-processing-using-opencv-python">4. Image Processing using OpenCV-Python</h3>
+
+<p>Here is the basic flowchart that I implemented:
+<br /><br />
+<img src="/images/rat_image_proc/fig2_flowchart.png" alt="Flow chart" width="150" /></p>
+
+<p>Figure 2. The flowchart
+<br /><br /></p>
+
+<p><strong>Step 1:</strong> Read the frames, convert it to gray scale, and specify the Region of Interest (ROI)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Convert from colored to grayscale</span>
+<span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+<span class="c"># Define a region of interest for the white plastic tray (landmark)</span>
+<span class="n">roi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">480</span><span class="p">,</span><span class="mi">640</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="n">roi</span><span class="p">[</span><span class="mi">240</span><span class="p">:</span><span class="mi">400</span><span class="p">,</span> <span class="mi">220</span><span class="p">:</span><span class="mi">460</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">160</span><span class="p">,</span><span class="mi">240</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span> <span class="o">*</span> <span class="mi">255</span>
+</code></pre></div></div>
+
+<p><img src="/images/rat_image_proc/fig3_gray.png" alt="Grayscale" width="320" /></p>
+
+<p>Figure 3. ROI is shown as the white rectangle
+<br /><br /></p>
+
+<p><strong>Step 2:</strong> Convert frame to a binary image</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Convert from grayscale to black-and-white</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="p">)</span>
+
+<span class="c"># Bitwise-AND the mask and the original image</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">thresh</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">roi</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/images/rat_image_proc/fig4_BW.png" alt="Binary image" width="320" /></p>
+
+<p>Figure 4. Binarized
+<br /><br /></p>
+
+<p><strong>Step 3:</strong> Use <code class="highlighter-rouge">cv2.findContours()</code> to find the desired large white area and mark it</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">contours</span><span class="p">,</span> <span class="n">hier</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="n">cv2</span><span class="o">.</span><span class="n">RETR_LIST</span><span class="p">,</span><span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="n">contours</span><span class="p">:</span>
+    <span class="k">if</span> <span class="mi">5000</span> <span class="o">&lt;</span> <span class="n">cv2</span><span class="o">.</span><span class="n">contourArea</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">20000</span><span class="p">:</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">drawContours</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">[</span><span class="n">cnt</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/images/rat_image_proc/fig5_contour.png" alt="Contour" width="320" /></p>
+
+<p>Figure 5. Contour idntified
+<br /><br /></p>
+
+<p><strong>Step 4:</strong> Finally, choose a window of interest to follow rat’s paw movements</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># x1, y1, x2, and y2 coordinates are defined based on the contour</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">),</span> <span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/images/rat_image_proc/fig6_roi.png" alt="Roi" width="320" /></p>
+
+<p>Figure 6. We are interested in the pixel variations within the RED area
+<br /><br /></p>
+
+<p><strong>Let’s look at the overall procedure one more time:</strong></p>
+
+<video poster="/images/rat_image_proc/fig7_poster.png" id="player" playsinline="" controls="">
+   <source src="/videos/rat_image_proc/output110.mp4" type="video/mp4" />
+   <source src="/videos/rat_image_proc/output110.webm" type="video/webm" />
+</video>
+
+<hr />
+
+<h3 id="5-testing-the-algorithm">5. Testing the Algorithm</h3>
+
+<p>I tested the algorithm on two sessions of recordings, each having about 100 trials. The confusion matrices and kappa statistics are given below. The group numbers represent the number of reaches with or without a successful pull. Actual numbers of reaches were determined by a human observer.</p>
+
+<p>1: One reach, 2: Two reaches, 3: Three reaches, 4: Four reaches</p>
+
+<p><strong>RESULTS</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	SESSION 1:
+
+		   		Predicted group
+			      1	  2   3   4  | Tot.			
+			  -------------------------
+			  1 | 20  2   1	  0  | 23		-Accuracy = 90%
+		 Actual	  2 | 1	  41  3   1  | 46		-Cohen's kappa = 0.8341
+	 	 Group	  3 | 0   1   16  0  | 17		-Near perfect agreement between groups
+			  4 | 0   0   0   1  | 1
+			  -------------------------
+			Tot.| 21  44  20  2  | 87
+
+
+	SESSION 2:
+
+		   		Predicted group
+			      1	  2   3   4  | Tot.			
+			  -------------------------
+			  1 | 34  3   0	  0  | 37		-Accuracy = 85%
+		 Actual	  2 | 5	  49  2   0  | 56		-Cohen's kappa = 0.7440
+	 	 Group	  3 | 1   4   8   0  | 13		-Substantial agreement between groups
+			  4 | 0   0   1   0  | 1
+			  -------------------------
+			Tot.| 40  56  11  0  | 107
+</code></pre></div></div>
+
+<h3 id="6-conclusion">6. Conclusion</h3>
+<p>By analyzing video images, I segregated rat’s reaching movements into different
+groups with significant accuracy. There were two major limitations in the method
+I used:</p>
+
+<ol>
+  <li>Paw detection is susceptible to changes in the background. The background
+  must be dark and static in order for this method to work efficiently. A better
+  approach would be placing the camera from a bird-view angle so that rat’s
+  body would not intervene with the ROI window.</li>
+  <li>The current method requires a pre-defined region to focus (the ROI) which
+  requires user adjustments based on camera angle. An optimal approach should
+  automatically decide an ROI without requiring the user’s involvement.</li>
+</ol>
+
+<h3 id="7-demo">7. Demo</h3>
+
+<p>Instructions for using the demo folder in a Python IDE (E.g. VS Code)</p>
+
+<ol>
+  <li>Download the files
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/goksinan/rat_video_demo.git
+</code></pre></div>    </div>
+  </li>
+  <li>Go to rat_video_demo directory and create a new virtual environment
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 -m venv venv
+$ source venv/bin/activate
+</code></pre></div>    </div>
+  </li>
+  <li>Install the required packages
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install -r requirements.txt
+</code></pre></div>    </div>
+  </li>
+  <li>Run the .py file
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 run.py
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#opencv">opencv</a>
+          
+            <a href="/tags#python">python</a>
+          
+            <a href="/tags#image">image</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Rat+Movement+Analysis&url=http%3A%2F%2Flocalhost%3A4000%2F2019-05-01-rat-movement-analysis%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2019-05-01-rat-movement-analysis%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2019-05-01-rat-movement-analysis%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2019-03-01-interview-questions/" data-toggle="tooltip" data-placement="top" title="Data Science Q&A">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2019-07-01-pca-on-wine-data/" data-toggle="tooltip" data-placement="top" title="PCA on Wine Quality Dataset">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:someone@example.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://www.facebook.com/deanattali" title="Facebook"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Facebook</span>
+              </a>
+            </li><li><a href="https://github.com/daattali" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/daattali" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Sinan Gok
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://localhost:4000/">Home</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  </body>
+</html>

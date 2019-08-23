@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>Comparison of Two Similarity Metrics</title>
+
+  <meta name="author" content="Sinan Gok" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Sinan Gok, PhD - My data science portfolio" href="http://localhost:4000/feed.xml" />
+
+  
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Comparison of Two Similarity Metrics" />
+  
+
+   
+  <meta property="og:description" content="Squared correlation and R-squared: When they are (NOT) the same thing? In graduate school, I worked on a project in which I used neural signals to predict the forelimb EMG signals in rats. I built a linear model and I reported my prediction accuracy in two forms: the correlation coefficient...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://localhost:4000/2019-01-01-Rsquared-vs-squaredr/" />
+  <link rel="canonical" href="http://localhost:4000/2019-01-01-Rsquared-vs-squaredr/" />
+  
+
+  
+  <meta property="og:image" content="http://localhost:4000/img/sakal-profile.jpeg" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Comparison of Two Similarity Metrics" />
+  
+
+  
+  <meta name="twitter:description" content="Squared correlation and R-squared: When they are (NOT) the same thing? In graduate school, I worked on a project in which I used neural signals to predict the forelimb EMG signals in rats. I built a linear model and I reported my prediction accuracy in two forms: the correlation coefficient...">
+  
+
+  
+  <meta name="twitter:image" content="http://localhost:4000/img/sakal-profile.jpeg" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://localhost:4000/">Sinan Gok, PhD</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/aboutme">About Me</a></li>
+          <li class="navlinks-container">
+            <a class="navlinks-parent" href="javascript:void(0)">Articles</a>
+            <div class="navlinks-children">
+              <a href="https://medium.com/@goksinan/object-oriented-programming-oop-in-python-a-short-introduction-cd32b4c84393">OOP in Python</a>
+              <a href="https://medium.com/@goksinan/demystifying-the-name-check-in-python-dce439472a83">The __name__ check</a>
+            </div>
+          </li>
+        
+          <li><a href="/resources">Resources</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://localhost:4000/">
+	      <img class="avatar-img" src="/img/sakal-profile.jpeg" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Comparison of Two Similarity Metrics</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on January 1, 2019</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <h2 id="squared-correlation-and-r-squared-when-they-are-not-the-same-thing">Squared correlation and R-squared: When they are (NOT) the same thing?</h2>
+
+<p>In graduate school, I worked on a project in which I used neural signals to predict the forelimb EMG signals in rats. I built a linear model and I reported my prediction accuracy in two forms: the <strong>correlation coefficient (<script type="math/tex">r</script>)</strong> and the <strong>coefficient of determination (<script type="math/tex">R</script>-squared or <script type="math/tex">R^2</script>)</strong>.</p>
+
+<p>Unfortunately, I received some criticism from a committee member during my defense and also from a reviewer when I submitted my paper. They told me that there was no need to report both <script type="math/tex">r</script> and <script type="math/tex">R^2</script>, because <script type="math/tex">R^2</script> was simply the square of the <script type="math/tex">r</script>. I searched this online and saw that a lot of people were saying the same thing: <em>coefficent of determination is simply the squared correlation coefficient, namely <script type="math/tex">r^2</script>!</em></p>
+
+<p>My motivation in using <script type="math/tex">r</script> and <script type="math/tex">R^2</script>, of course, was to evaluate the similarity between actual and predicted EMG signals. <script type="math/tex">r</script> generates a value between -1 and 1, and reflects if two signals covary, meaning if they increase or decrease together. <script type="math/tex">r</script> doesn’t care about the signal amplitudes, i.e. it isn’t affected by the differences in the means. <script type="math/tex">R^2</script> on the other hand, cares about the distances between points, and it can go to negative values pretty quickly (although most people believe that it ranges between 0 and 1 since it is a ratio and squared value!), if two signals have different means.</p>
+
+<p>Obviously, there is a confusion. There are actually 3 different concepts here: 1.correlation coefficient (<script type="math/tex">r</script>) 2.squared correlation coefficient (<script type="math/tex">r^2</script>) and 3. coefficient of determination (<script type="math/tex">R^2</script>). And yes, sometimes <script type="math/tex">r^2</script> and <script type="math/tex">R^2</script> are the same thing, but sometimes they are not. I tried to clarify this in my mind by applying these concepts on a dataset. I would like to share my insights with you.</p>
+
+<h2 id="when-r2-is-equal-to-r2">When <script type="math/tex">r^2</script> is equal to <script type="math/tex">R^2</script></h2>
+
+<p>I am going to use the cars data from the R library. There are 50 observations and 2 variables in this dataset, the <strong>speed</strong> and <strong>stopping distances</strong> of cars. Here is a quick summary:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">summary</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">##     speed           dist       </span><span class="w">
+</span><span class="c1">## Min.   : 4.0   Min.   :  2.00  </span><span class="w">
+</span><span class="c1">## 1st Qu.:12.0   1st Qu.: 26.00  </span><span class="w">
+</span><span class="c1">## Median :15.0   Median : 36.00  </span><span class="w">
+</span><span class="c1">## Mean   :15.4   Mean   : 42.98  </span><span class="w">
+</span><span class="c1">## 3rd Qu.:19.0   3rd Qu.: 56.00  </span><span class="w">
+</span><span class="c1">## Max.   :25.0   Max.   :120.00</span><span class="w">
+</span></code></pre></div></div>
+
+<p>We already know that these are two different quantities with different measurement units, i.e. <strong>mph</strong> and <strong>ft</strong>. By examining the scatter plot, we see that these two variables are positively correlated:</p>
+
+<p><img src="/images/R2_vs_r2/fig1.png" alt="Stopping distance vs. speed" width="600" />
+Figure 1. Scatter plot
+<br /><br /></p>
+
+<p>Remember that the correlation is a measure of the linear relationship between <script type="math/tex">X</script> and <script type="math/tex">Y</script>, and defined as:</p>
+
+<p><img src="/images/R2_vs_r2/eq1.png" alt="Correlation formula" width="500" />
+<br /><br /></p>
+
+<p>where <script type="math/tex">\bar{x}</script> denotes the mean of variable <script type="math/tex">x</script>. Note that means are substracted to find the variances and the covarience. Now, lets recall the formulas used for computing the <script type="math/tex">R^2</script>:</p>
+
+<p><img src="/images/R2_vs_r2/eq2.png" alt="Correlation formula" width="500" />
+<br /><br /></p>
+
+<p>where <script type="math/tex">RSS</script> is the Residual Sum of Squares, <script type="math/tex">TSS</script> is the Total Sum of Squares, <script type="math/tex">y</script> is the obervations, <script type="math/tex">\bar{y}</script> denotes the observation mean, and <script type="math/tex">\hat{y}</script> is the predictions.</p>
+
+<p>Let’s use the <code class="highlighter-rouge">cor()</code> and <code class="highlighter-rouge">lm()</code> functions to compute the <script type="math/tex">r</script> and <script type="math/tex">R^2</script>, respectively:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">attach</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span><span class="w">
+</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cor</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span><span class="n">speed</span><span class="p">)</span><span class="w">
+</span><span class="n">lm.fit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">dist</span><span class="o">~</span><span class="n">speed</span><span class="p">)</span><span class="w">
+</span><span class="n">Rsquared</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">summary</span><span class="p">(</span><span class="n">lm.fit</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span><span class="w">
+</span><span class="c1"># Print results</span><span class="w">
+</span><span class="n">cat</span><span class="p">(</span><span class="s2">"Correlation coefficient = "</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w">
+</span><span class="c1">## Correlation coefficient =  0.8068949</span><span class="w">
+</span><span class="n">cat</span><span class="p">(</span><span class="s2">"Square of corr. coef. = "</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="o">*</span><span class="n">r</span><span class="p">)</span><span class="w">
+</span><span class="c1">## Square of corr. coef. =  0.6510794</span><span class="w">
+</span><span class="n">cat</span><span class="p">(</span><span class="s2">"Coefficient of determination= "</span><span class="p">,</span><span class="w"> </span><span class="n">Rsquared</span><span class="p">)</span><span class="w">
+</span><span class="c1">## Coefficient of determination=  0.6510794</span><span class="w">
+</span></code></pre></div></div>
+
+<p>As you can see, <script type="math/tex">r^2</script> and <script type="math/tex">R^2</script> are exactly the same thing! We took the advantage of linear model object to fetch the <script type="math/tex">R^2</script>, but we can verify the result using the formula:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="w">
+</span><span class="n">y_hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fitted.values</span><span class="p">(</span><span class="n">lm.fit</span><span class="p">)</span><span class="w">
+</span><span class="n">y_bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w">
+</span><span class="n">RSS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_hat</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">TSS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_bar</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">Rsquared</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">RSS</span><span class="o">/</span><span class="n">TSS</span><span class="w">
+</span><span class="n">cat</span><span class="p">(</span><span class="s2">"Coefficient of determination= "</span><span class="p">,</span><span class="w"> </span><span class="n">Rsquared</span><span class="p">)</span><span class="w">
+</span><span class="c1">## Coefficient of determination=  0.6510794</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Our goal was to measure the similarity between the variables <script type="math/tex">x</script> (speed) and <script type="math/tex">y</script> (distance), and we did that in two ways: First, finding the correlation between <script type="math/tex">x</script> and <script type="math/tex">y</script> and second, by modeling the linear relationship between <script type="math/tex">x</script> and <script type="math/tex">y</script>. We conclude that <script type="math/tex">r^2 = R^2</script> holds for simple linear regression and when the intercept term is included. By the way, this can not be generalized to Multiple Linear Regression (please see <a href="http://www-bcf.usc.edu/~gareth/ISL/">An Introduction to Statistical Learning</a> for more).</p>
+
+<h2 id="when-r2-is-not-equal-to-r2">When <script type="math/tex">r^2</script> is NOT equal to <script type="math/tex">R^2</script></h2>
+
+<h3 id="1-if-there-is-no-constant-term-intercept">1. If there is no constant term (intercept)</h3>
+<p>Now, let’s exclude the intercept term and see what happens. Below is a picture of fitted lines with and without the intercept term:</p>
+
+<p><img src="/images/R2_vs_r2/fig2.png" alt="Stopping distance vs. speed" width="600" /></p>
+
+<p>Figure 2. Fitted line with and without the intercept
+<br /><br /></p>
+
+<p>Let’s take a look at the <script type="math/tex">R^2</script> one more time:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lm.fit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">dist</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="m">-1</span><span class="p">)</span><span class="w"> </span><span class="c1"># Linear fit without intercept</span><span class="w">
+</span><span class="n">Rsquared</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">summary</span><span class="p">(</span><span class="n">lm.fit</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span><span class="w">
+</span><span class="n">cat</span><span class="p">(</span><span class="s2">"Coefficient of determination= "</span><span class="p">,</span><span class="w"> </span><span class="n">Rsquared</span><span class="p">)</span><span class="w">
+</span><span class="c1">## Coefficient of determination=  0.8962893</span><span class="w">
+</span></code></pre></div></div>
+
+<p>It is different, and it is overestimated. Why? You can look <a href="https://stackoverflow.com/questions/20333600/why-does-summary-overestimate-the-r-squared-with-a-no-intercept-model-formula">here</a> for a detailed discussion, but in simple terms, when intercept is excluded, the algorithm considers the observation mean (<script type="math/tex">\bar{y}</script> ) as 0, and thus the <script type="math/tex">TSS</script> term becomes larger leading to an increase in the <script type="math/tex">R^2</script> value.</p>
+
+<h3 id="2-if-you-want-to-explain-a-variable-using-a-second-variable">2. If you want to <em>explain</em> a variable using a second variable</h3>
+
+<p>Now, we are going to look at the same data from a different perspective.</p>
+
+<p>I am going to use the same <strong>dist</strong> and <strong>speed</strong> variables, but in a hypothetical setting. Let’s assume that I have bunch of other drivers and attributes of those drivers. I trained a model that takes driver attributes as inputs and produces the time that driver spent in traffic as the output. I tested my model on a test set (50 cars) and recorded the predicted output (<script type="math/tex">y\_hat</script>). I already know the actual output (<script type="math/tex">y</script>). Now, I want to evaluate the performance of my model. Let’s assume that <script type="math/tex">y</script> is identical to <strong>dist</strong> and <script type="math/tex">y\_hat</script> is identical to <strong>speed</strong>.</p>
+
+<p>In other words, I have an actual signal and a predicted signal which happen to have the same values as <strong>dist</strong> and <strong>speed</strong>, respectively. But, we will pretend that they both have the same unit (e.g. seconds):</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dist</span><span class="w">
+</span><span class="n">y_hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">speed</span><span class="w">
+</span></code></pre></div></div>
+
+<p>As the performance criteria, I decided to report the similarity between the actual signal and predicted signal. Which one should I pick, <script type="math/tex">r</script> or <script type="math/tex">R^2</script>?</p>
+
+<p>If we plot them on the same graph, we will see that they are quiet different from each other. Notice that x-axis is just the sample number:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">50</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s2">"b"</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="o">=</span><span class="m">19</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s2">"sample no"</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s2">"time (min)"</span><span class="p">)</span><span class="w">
+</span><span class="n">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y_hat</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s2">"b"</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="o">=</span><span class="m">19</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
+</span><span class="n">legend</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">110</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s2">"actual"</span><span class="p">,</span><span class="w"> </span><span class="s2">"predicted"</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">),</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/images/R2_vs_r2/fig3.png" alt="Stopping distance vs. speed" width="600" /></p>
+
+<p>Figure 3. Original and predicted vectors
+<br /><br /></p>
+
+<p>And the <script type="math/tex">R^2</script> is:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w">
+</span><span class="n">RSS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_hat</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">TSS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_bar</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">Rsquared</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">RSS</span><span class="o">/</span><span class="n">TSS</span><span class="w">
+</span><span class="n">cat</span><span class="p">(</span><span class="s2">"Coefficient of determination= "</span><span class="p">,</span><span class="w"> </span><span class="n">Rsquared</span><span class="p">)</span><span class="w">
+</span><span class="c1">## Coefficient of determination=  -0.8798069</span><span class="w">
+</span></code></pre></div></div>
+
+<p>As these two signals become more separated, the <script type="math/tex">R^2</script> value will decrease while the <script type="math/tex">r</script> value will stay the same. Let’s look at this in a picture form:</p>
+
+<p><img src="/images/R2_vs_r2/fig4.png" alt="Stopping distance vs. speed" width="600" /></p>
+
+<p>Figure 4. The <script type="math/tex">r</script> and <script type="math/tex">R^2</script> as a function of mean difference
+<br /><br /></p>
+
+<p><script type="math/tex">R^2</script> gives us a measure on how much of the variation in the actual variable <script type="math/tex">y</script> can be explained by the predicted variable <script type="math/tex">y\_hat</script>. By switching their roles, we change the <script type="math/tex">RSS/TSS</script> term, thus we obtain a different <script type="math/tex">R^2</script> value.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">speed</span><span class="w">
+</span><span class="n">y_hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dist</span><span class="w">
+</span><span class="n">y_bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w">
+</span><span class="n">RSS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_hat</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">TSS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_bar</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">Rsquared</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">RSS</span><span class="o">/</span><span class="n">TSS</span><span class="w">
+</span><span class="n">cat</span><span class="p">(</span><span class="s2">"Coefficient of determination= "</span><span class="p">,</span><span class="w"> </span><span class="n">Rsquared</span><span class="p">)</span><span class="w">
+</span><span class="c1">## Coefficient of determination=  -43.64745</span><span class="w">
+</span></code></pre></div></div>
+
+<p>To put the above phenomena into a context, let’s say that we built a model using the training data we have. But, in actuality, the features are not capable of establishing a linear relationship to the output, and it turned out that our model did a terrible job in making predictions from unseen data. Let’s say the model produced a prediction that is hugely diverted from the true values. In theory, we can still have a moderate correlation between predicted and actual signals, however, <script type="math/tex">R^2</script> will generate a very small or negative value depending on the differences in their means.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<ul>
+  <li>
+    <p>If we use Linear Regression to assess the similarity between <script type="math/tex">x</script> and <script type="math/tex">y</script>, the algorithm will use y and fitted values (<script type="math/tex">\beta_0 + X*\beta_1</script>) to compute the <script type="math/tex">R^2</script>. In that case, the the squared correlation and <script type="math/tex">R^2</script> will be the same.</p>
+  </li>
+  <li>
+    <p>If we have two separate variables (e.g. actual signal vs. the model output) and we want to compare them, we should avoid using Linear Regression function <code class="highlighter-rouge">lm()</code> just because it automatically reports the <script type="math/tex">R^2</script>. We are not interested in fitting two variables, but we want to know if our prediction is close to the actual data or not. In that case, we should directly implement the <script type="math/tex">R^2</script> formula.</p>
+  </li>
+</ul>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#R">R</a>
+          
+            <a href="/tags#similarity">similarity</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Comparison+of+Two+Similarity+Metrics&url=http%3A%2F%2Flocalhost%3A4000%2F2019-01-01-Rsquared-vs-squaredr%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2019-01-01-Rsquared-vs-squaredr%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2019-01-01-Rsquared-vs-squaredr%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2019-01-01-virtual-env/" data-toggle="tooltip" data-placement="top" title="Python Virtual Environment">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2019-03-01-interview-questions/" data-toggle="tooltip" data-placement="top" title="Data Science Q&A">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:someone@example.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://www.facebook.com/deanattali" title="Facebook"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Facebook</span>
+              </a>
+            </li><li><a href="https://github.com/daattali" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/daattali" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Sinan Gok
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://localhost:4000/">Home</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  </body>
+</html>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sinan Gok, PhD</title>
+    <description>My data science portfolio</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Digit recognition using MNIST Database</title>
+        <description>
+          
+          Supervised learning (classification) Data science problem: Recognize hand written digits from images. A real world example would be recognizing hand written zip codes on mails so that they can be sorted by a machine according to their destinations. This would help the postal service to greatly reduce the costs associated...
+        </description>
+        <pubDate>Mon, 01 Jul 2019 02:00:00 -0700</pubDate>
+        <link>http://localhost:4000/2019-07-01-classification-on-digits-data/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019-07-01-classification-on-digits-data/</guid>
+      </item>
+    
+      <item>
+        <title>PCA on Wine Quality Dataset</title>
+        <description>
+          Principal Component Analysis for unsupervised learning - 
+          We will use the Wine Quality Data Set for red wines created by P. Cortez et al. It has 11 variables and 1600 observations. Data science problem: Find out which features of wine are important to determine its quality. We will use the Wine Quality Data Set for red wines...
+        </description>
+        <pubDate>Mon, 01 Jul 2019 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/2019-07-01-pca-on-wine-data/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019-07-01-pca-on-wine-data/</guid>
+      </item>
+    
+      <item>
+        <title>Rat Movement Analysis</title>
+        <description>
+          
+          Using Python (OpenCV) to analyze video files 1. Excerpt I have collected video recordings from a rat that was performing multiple trials of reach-and-pull activities. My goal in this project is to classify these activities based on the number of reaches rat performed in each trial. The overall procedure looks...
+        </description>
+        <pubDate>Wed, 01 May 2019 02:00:00 -0700</pubDate>
+        <link>http://localhost:4000/2019-05-01-rat-movement-analysis/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019-05-01-rat-movement-analysis/</guid>
+      </item>
+    
+      <item>
+        <title>Data Science Q&amp;A</title>
+        <description>
+          
+          What are the “components of learning” in Machine Learning? What is bias-variance tradeoff? How is KNN different than k-means clustering? What are ROC and AUC? What is a cost function? What is gradient descent? Why feature scaling is important before applying a learning algorithm? What is Linear Regression? What is...
+        </description>
+        <pubDate>Fri, 01 Mar 2019 01:00:00 -0800</pubDate>
+        <link>http://localhost:4000/2019-03-01-interview-questions/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019-03-01-interview-questions/</guid>
+      </item>
+    
+      <item>
+        <title>Comparison of Two Similarity Metrics</title>
+        <description>
+          
+          Squared correlation and R-squared: When they are (NOT) the same thing? In graduate school, I worked on a project in which I used neural signals to predict the forelimb EMG signals in rats. I built a linear model and I reported my prediction accuracy in two forms: the correlation coefficient...
+        </description>
+        <pubDate>Tue, 01 Jan 2019 01:00:00 -0800</pubDate>
+        <link>http://localhost:4000/2019-01-01-Rsquared-vs-squaredr/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019-01-01-Rsquared-vs-squaredr/</guid>
+      </item>
+    
+      <item>
+        <title>Python Virtual Environment</title>
+        <description>
+          Creating and using a virtual environment for Python - 
+          When you start a new Python project, the chances are, you freshly install all the required packages and start working. When you finish your work, the project is all good and behaves as expected. That is because it satisfies all the “dependencies” among packages. In time, you keep working on...
+        </description>
+        <pubDate>Tue, 01 Jan 2019 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/2019-01-01-virtual-env/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019-01-01-virtual-env/</guid>
+      </item>
+    
+      <item>
+        <title>Big Mart Sales Prediction</title>
+        <description>
+          
+          Coming soon
+
+        </description>
+        <pubDate>Mon, 01 Jan 2018 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/2018-01-01-sales-prediction/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018-01-01-sales-prediction/</guid>
+      </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>Tag Index</title>
+
+  <meta name="author" content="Sinan Gok" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Sinan Gok, PhD - My data science portfolio" href="http://localhost:4000/feed.xml" />
+
+  
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Tag Index" />
+  
+
+   
+  <meta property="og:description" content="{%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:',' | sort -%} {%- for tag in tags_list -%} &amp;nbsp;{{- tag -}}&amp;nbsp;({{site.tags[tag].size}}) {%- endfor -%} {%- for...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://localhost:4000/tags/" />
+  <link rel="canonical" href="http://localhost:4000/tags/" />
+  
+
+  
+  <meta property="og:image" content="http://localhost:4000/img/sakal-profile.jpeg" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Tag Index" />
+  
+
+  
+  <meta name="twitter:description" content="{%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:',' | sort -%} {%- for tag in tags_list -%} &amp;nbsp;{{- tag -}}&amp;nbsp;({{site.tags[tag].size}}) {%- endfor -%} {%- for...">
+  
+
+  
+  <meta name="twitter:image" content="http://localhost:4000/img/sakal-profile.jpeg" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://localhost:4000/">Sinan Gok, PhD</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/aboutme">About Me</a></li>
+          <li class="navlinks-container">
+            <a class="navlinks-parent" href="javascript:void(0)">Articles</a>
+            <div class="navlinks-children">
+              <a href="https://medium.com/@goksinan/object-oriented-programming-oop-in-python-a-short-introduction-cd32b4c84393">OOP in Python</a>
+              <a href="https://medium.com/@goksinan/demystifying-the-name-check-in-python-dce439472a83">The __name__ check</a>
+            </div>
+          </li>
+        
+          <li><a href="/resources">Resources</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://localhost:4000/">
+	      <img class="avatar-img" src="/img/sakal-profile.jpeg" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          <h1>Tag Index</h1>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <a href="#Interview" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;Interview&nbsp;(1)</a><a href="#KNN" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;KNN&nbsp;(1)</a><a href="#PCA" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;PCA&nbsp;(1)</a><a href="#Questions" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;Questions&nbsp;(1)</a><a href="#R" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;R&nbsp;(1)</a><a href="#Scikit-learn" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;Scikit-learn&nbsp;(1)</a><a href="#Supervised learning" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;Supervised learning&nbsp;(1)</a><a href="#Unsupervised learning" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;Unsupervised learning&nbsp;(1)</a><a href="#Virtual environment" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;Virtual environment&nbsp;(1)</a><a href="#deep-learning" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;deep-learning&nbsp;(1)</a><a href="#image" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;image&nbsp;(1)</a><a href="#machine-learning" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;machine-learning&nbsp;(1)</a><a href="#opencv" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;opencv&nbsp;(1)</a><a href="#pip" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;pip&nbsp;(1)</a><a href="#python" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;python&nbsp;(2)</a><a href="#similarity" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;similarity&nbsp;(1)</a><div id="full-tags-list"><h2 id="Interview" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;Interview&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-03-01-interview-questions/">Data Science Q&A</a>
+                <div class="entry-date">
+                    <time datetime="2019-03-01T01:00:00-08:00">March 1, 2019</time>
+                </div>
+            </div></div><h2 id="KNN" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;KNN&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-07-01-classification-on-digits-data/">Digit recognition using MNIST Database</a>
+                <div class="entry-date">
+                    <time datetime="2019-07-01T02:00:00-07:00">July 1, 2019</time>
+                </div>
+            </div></div><h2 id="PCA" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;PCA&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-07-01-pca-on-wine-data/">PCA on Wine Quality Dataset</a>
+                <div class="entry-date">
+                    <time datetime="2019-07-01T00:00:00-07:00">July 1, 2019</time>
+                </div>
+            </div></div><h2 id="Questions" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;Questions&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-03-01-interview-questions/">Data Science Q&A</a>
+                <div class="entry-date">
+                    <time datetime="2019-03-01T01:00:00-08:00">March 1, 2019</time>
+                </div>
+            </div></div><h2 id="R" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;R&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-01-01-Rsquared-vs-squaredr/">Comparison of Two Similarity Metrics</a>
+                <div class="entry-date">
+                    <time datetime="2019-01-01T01:00:00-08:00">January 1, 2019</time>
+                </div>
+            </div></div><h2 id="Scikit-learn" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;Scikit-learn&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-07-01-classification-on-digits-data/">Digit recognition using MNIST Database</a>
+                <div class="entry-date">
+                    <time datetime="2019-07-01T02:00:00-07:00">July 1, 2019</time>
+                </div>
+            </div></div><h2 id="Supervised learning" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;Supervised learning&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-07-01-classification-on-digits-data/">Digit recognition using MNIST Database</a>
+                <div class="entry-date">
+                    <time datetime="2019-07-01T02:00:00-07:00">July 1, 2019</time>
+                </div>
+            </div></div><h2 id="Unsupervised learning" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;Unsupervised learning&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-07-01-pca-on-wine-data/">PCA on Wine Quality Dataset</a>
+                <div class="entry-date">
+                    <time datetime="2019-07-01T00:00:00-07:00">July 1, 2019</time>
+                </div>
+            </div></div><h2 id="Virtual environment" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;Virtual environment&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-01-01-virtual-env/">Python Virtual Environment</a>
+                <div class="entry-date">
+                    <time datetime="2019-01-01T00:00:00-08:00">January 1, 2019</time>
+                </div>
+            </div></div><h2 id="deep-learning" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;deep-learning&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2018-01-01-sales-prediction/">Big Mart Sales Prediction</a>
+                <div class="entry-date">
+                    <time datetime="2018-01-01T00:00:00-08:00">January 1, 2018</time>
+                </div>
+            </div></div><h2 id="image" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;image&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-05-01-rat-movement-analysis/">Rat Movement Analysis</a>
+                <div class="entry-date">
+                    <time datetime="2019-05-01T02:00:00-07:00">May 1, 2019</time>
+                </div>
+            </div></div><h2 id="machine-learning" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;machine-learning&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2018-01-01-sales-prediction/">Big Mart Sales Prediction</a>
+                <div class="entry-date">
+                    <time datetime="2018-01-01T00:00:00-08:00">January 1, 2018</time>
+                </div>
+            </div></div><h2 id="opencv" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;opencv&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-05-01-rat-movement-analysis/">Rat Movement Analysis</a>
+                <div class="entry-date">
+                    <time datetime="2019-05-01T02:00:00-07:00">May 1, 2019</time>
+                </div>
+            </div></div><h2 id="pip" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;pip&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-01-01-virtual-env/">Python Virtual Environment</a>
+                <div class="entry-date">
+                    <time datetime="2019-01-01T00:00:00-08:00">January 1, 2019</time>
+                </div>
+            </div></div><h2 id="python" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;python&nbsp;(2)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-05-01-rat-movement-analysis/">Rat Movement Analysis</a>
+                <div class="entry-date">
+                    <time datetime="2019-05-01T02:00:00-07:00">May 1, 2019</time>
+                </div>
+            </div><div class="tag-entry">
+                <a href="/2018-01-01-sales-prediction/">Big Mart Sales Prediction</a>
+                <div class="entry-date">
+                    <time datetime="2018-01-01T00:00:00-08:00">January 1, 2018</time>
+                </div>
+            </div></div><h2 id="similarity" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;similarity&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-01-01-Rsquared-vs-squaredr/">Comparison of Two Similarity Metrics</a>
+                <div class="entry-date">
+                    <time datetime="2019-01-01T01:00:00-08:00">January 1, 2019</time>
+                </div>
+            </div></div></div>
+
+	    
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:someone@example.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://www.facebook.com/deanattali" title="Facebook"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Facebook</span>
+              </a>
+            </li><li><a href="https://github.com/daattali" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/daattali" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Sinan Gok
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://localhost:4000/">Home</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  </body>
+</html>

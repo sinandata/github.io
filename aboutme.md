@@ -1,16 +1,16 @@
 ---
 layout: page
 title: About me
-subtitle: Why you'd want to go on a date with me
+subtitle: Why do I have this website?
 ---
 
-My name is Inigo Montoya. I have the following qualities:
+I am a data science enthusiast with experience in signal processing, machine learning, data analysis, and data visualization. There is no doubt that we are living in an increasingly data driven world, which presents unique challenges as well as ample opportunities to gain new information. My goal is to utilize the knowledge and skills that I gained over the years to contribute to data science community. I use this platform to share thoughts and projects and interact with my peers.
 
-- I rock a great mustache
-- I'm extremely loyal to my family
 
-What else do you need?
+### My bio
 
-### my history
+Research engineer with over 6 years of experience in data collection and analysis. Experience in the stages of data lifecycle (acquisition, storage, wrangling, analysis, and publishing). In-depth knowledge of digital signal processing, machine learning and predictive modeling, and exposure to statistical analysis techniques.
 
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my movie](http://en.wikipedia.org/wiki/The_Princess_Bride_%28film%29) and it will answer **all** your questions.
+Ability to gather and interpret information, learn quickly, make sense of data, manage a project, communicate with peers, present ideas, and think in an innovative and creative manner.
+
+MATLAB, LabView, Python, Numpy, Scipy, Keras, TensorFlow, Matplotlib, Plotly, Bokeh, Scikit-learn, Scikit-image, OpenCV, R, Git, GitHub, GitHub Pages, SQL.
