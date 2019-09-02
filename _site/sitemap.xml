@@ -35,6 +35,9 @@
 <loc>http://localhost:4000/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/mlpipeline/</loc>
+</url>
+<url>
 <loc>http://localhost:4000/resources/</loc>
 </url>
 <url>

@@ -21,6 +21,8 @@ description: My data science portfolio
 # List of links in the navigation bar
 navbar-links:
   About Me: "aboutme"
+  Showcase:
+    - ML Pipeline: "mlpipeline"
   Articles:
     - OOP in Python: "https://medium.com/@goksinan/object-oriented-programming-oop-in-python-a-short-introduction-cd32b4c84393"
     - The __name__ check: "https://medium.com/@goksinan/demystifying-the-name-check-in-python-dce439472a83"

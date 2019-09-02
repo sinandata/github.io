@@ -2,8 +2,8 @@
 title: "Big Mart Sales Prediction"
 date: 2018-01-01
 tags: [machine-learning, python, deep-learning]
-excerpt: "Python, Deep Learning"
+excerpt: "Python, Random Forests, XGBoost"
 category: "machine"
 ---
 
-## Coming soon
+Please go to showcase [page](/mlpipeline/)
