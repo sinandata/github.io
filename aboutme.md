@@ -4,7 +4,7 @@ title: About me
 subtitle: Why do I have this website?
 ---
 
-I am a data science enthusiast with experience in signal processing, machine learning, data analysis, and data visualization. There is no doubt that we are living in an increasingly data driven world, which presents unique challenges as well as ample opportunities to gain new information. My goal is to utilize the knowledge and skills that I gained over the years to contribute to data science community. I use this platform to share thoughts and projects and interact with my peers.
+I am a data science enthusiast with experience in signal and image processing, machine learning, deep learning, and data visualization. There is no doubt that we are living in an increasingly data driven world, which presents unique challenges as well as ample opportunities to gain new information. My goal is to utilize the knowledge and skills that I gained over the years to contribute to data science community. I use this platform to share thoughts and projects and interact with fellow enthusiasts.
 
 
 ### My bio
